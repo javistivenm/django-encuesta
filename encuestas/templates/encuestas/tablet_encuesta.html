@@ -1,0 +1,58 @@
+{% extends "encuestas/base_tablet.html" %}
+
+{% block title %}Encuesta | {{ punto.identificador }}{% endblock %}
+
+{% block content %}
+<h1>{{ configuracion.texto_bienvenida }}</h1>
+<p class="muted">{{ configuracion.texto_instrucciones }}</p>
+
+<span class="chip">Sede: {{ punto.comedor.sede.nombre }}</span>
+<span class="chip">Comedor: {{ punto.comedor.nombre }}</span>
+<span class="chip">Punto: {{ punto.identificador }}</span>
+
+{% if turno_automatico %}
+    <p class="muted">Turno asignado automaticamente: <strong>{{ turno_automatico.nombre }}</strong></p>
+{% elif requiere_turno_manual %}
+    <p class="muted">Seleccione manualmente el turno para esta respuesta.</p>
+{% endif %}
+
+{% if formulario.non_field_errors %}
+    <div class="errors">{{ formulario.non_field_errors }}</div>
+{% endif %}
+
+<form method="post">
+    {% csrf_token %}
+
+    {% for field in formulario %}
+        {% if field.name == 'satisfaccion_general' or field.name == 'calidad_comida' or field.name == 'variedad_menu' or field.name == 'limpieza_comedor' or field.name == 'tiempo_atencion_fila' %}
+            <div class="question">
+                <h3>{{ field.label }}</h3>
+                {% if field.errors %}<div class="errors">{{ field.errors }}</div>{% endif %}
+                <div class="escala">
+                    {% for radio in field %}
+                        <label>
+                            {{ radio.tag }}
+                            <span>{{ radio.choice_label }}</span>
+                        </label>
+                    {% endfor %}
+                </div>
+            </div>
+        {% elif field.name == 'turno' %}
+            <div class="question">
+                <h3>{{ field.label }}</h3>
+                {% if field.errors %}<div class="errors">{{ field.errors }}</div>{% endif %}
+                {{ field }}
+            </div>
+        {% elif field.name == 'comentario' %}
+            <div class="question">
+                <h3>{{ field.label }}</h3>
+                {% if field.errors %}<div class="errors">{{ field.errors }}</div>{% endif %}
+                {{ field }}
+            </div>
+        {% endif %}
+    {% endfor %}
+
+    <button class="btn btn-primary" type="submit">Enviar respuesta</button>
+    <a class="btn btn-link" href="{% url 'encuestas:tablet_inicio' %}">Cambiar punto</a>
+</form>
+{% endblock %}

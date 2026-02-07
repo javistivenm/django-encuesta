@@ -1,0 +1,15 @@
+{% extends "encuestas/base_tablet.html" %}
+
+{% block title %}Gracias | {{ punto.identificador }}{% endblock %}
+
+{% block content %}
+<h1>{{ configuracion.texto_agradecimiento }}</h1>
+<p class="muted">La encuesta se reiniciara automaticamente en 5 segundos.</p>
+<a class="btn btn-primary" href="{{ retorno_url }}">Continuar ahora</a>
+
+<script>
+    setTimeout(function () {
+        window.location.href = "{{ retorno_url }}";
+    }, 5000);
+</script>
+{% endblock %}

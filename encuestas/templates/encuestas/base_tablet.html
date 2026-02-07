@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Encuesta Comedores{% endblock %}</title>
+    <style>
+        :root {
+            --fondo: #f4f7fb;
+            --panel: #ffffff;
+            --texto: #10243a;
+            --subtexto: #4b6074;
+            --acento: #0e7490;
+            --acento-2: #0891b2;
+            --borde: #d7e3ef;
+            --error: #b91c1c;
+        }
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            font-family: "Segoe UI", "Noto Sans", sans-serif;
+            color: var(--texto);
+            background: radial-gradient(circle at top right, #dbeafe 0%, var(--fondo) 45%);
+            min-height: 100vh;
+        }
+        .wrapper {
+            width: min(980px, 100%);
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .panel {
+            background: var(--panel);
+            border: 1px solid var(--borde);
+            border-radius: 18px;
+            padding: 24px;
+            box-shadow: 0 10px 30px rgba(16, 36, 58, 0.08);
+        }
+        h1 { margin: 0 0 10px; font-size: clamp(1.5rem, 3vw, 2rem); }
+        .muted { color: var(--subtexto); margin: 0 0 14px; }
+        .chip {
+            display: inline-block;
+            border: 1px solid var(--borde);
+            border-radius: 999px;
+            padding: 6px 12px;
+            margin: 4px 8px 12px 0;
+            font-size: 0.92rem;
+            background: #f8fbff;
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+        .btn:hover { transform: translateY(-1px); }
+        .btn-primary {
+            background: linear-gradient(120deg, var(--acento), var(--acento-2));
+            color: #fff;
+            padding: 14px 20px;
+            min-height: 52px;
+            box-shadow: 0 8px 18px rgba(14, 116, 144, 0.25);
+        }
+        .btn-link {
+            border: 1px solid var(--borde);
+            color: var(--texto);
+            background: #fff;
+            padding: 12px 16px;
+            min-height: 48px;
+        }
+        .grid { display: grid; gap: 14px; }
+        .escala {
+            display: grid;
+            grid-template-columns: repeat(5, minmax(0, 1fr));
+            gap: 10px;
+            margin-bottom: 18px;
+        }
+        .escala label {
+            display: grid;
+            place-items: center;
+            border: 1px solid var(--borde);
+            border-radius: 12px;
+            padding: 12px 4px;
+            font-weight: 700;
+            min-height: 52px;
+        }
+        .escala input[type="radio"] {
+            accent-color: var(--acento);
+            width: 22px;
+            height: 22px;
+            margin: 0 0 6px;
+        }
+        .question { margin-top: 18px; }
+        .question h3 { margin: 0 0 8px; font-size: 1.05rem; }
+        textarea, select {
+            width: 100%;
+            border-radius: 10px;
+            border: 1px solid var(--borde);
+            padding: 10px;
+            font-size: 1rem;
+        }
+        .errors {
+            margin: 10px 0;
+            color: var(--error);
+            font-weight: 600;
+        }
+        @media (max-width: 700px) {
+            .panel { padding: 18px; }
+            .escala { grid-template-columns: repeat(5, minmax(52px, 1fr)); }
+        }
+    </style>
+</head>
+<body>
+    <main class="wrapper">
+        <section class="panel">
+            {% block content %}{% endblock %}
+        </section>
+    </main>
+</body>
+</html>

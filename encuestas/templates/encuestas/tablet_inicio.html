@@ -1,0 +1,21 @@
+{% extends "encuestas/base_tablet.html" %}
+
+{% block title %}Inicio | Encuesta Comedores{% endblock %}
+
+{% block content %}
+<h1>{{ configuracion.texto_bienvenida }}</h1>
+<p class="muted">{{ configuracion.texto_instrucciones }}</p>
+
+{% if puntos %}
+    <p class="muted">Seleccione el punto de captura para iniciar el ciclo de encuesta:</p>
+    <div class="grid">
+        {% for punto in puntos %}
+            <a class="btn btn-primary" href="{% url 'encuestas:tablet_encuesta' punto.identificador %}">
+                {{ punto.identificador }} - {{ punto.comedor.nombre }}
+            </a>
+        {% endfor %}
+    </div>
+{% else %}
+    <p class="muted">No hay puntos de captura activos. Configure uno en el admin.</p>
+{% endif %}
+{% endblock %}
